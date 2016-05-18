@@ -1,0 +1,69 @@
+﻿/*----skins of sliderbar.css----*/
+
+.defaultbar {
+	position: relative;
+	margin-top: 10px;
+	height: 16px;
+	background: #FAFAFA;
+	box-shadow: inset 0 1px 1px #f0f0f0;
+	border: 1px solid #D3D3D3;
+	border-radius: 2px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+
+.defaultbar:hover {
+	box-shadow: #A5B6C8 1px 1px 7px;
+}
+
+.defaultbar > div {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+
+.defaultbar .j-completed {
+	height: 14px;
+	background-color: limegreen;
+	top: 1px;
+	left: 1px;
+	position: absolute;
+	border-radius: 4px;
+}
+
+.defaultbar .j-sliderbar {
+	height: 26px;
+	top: -6px;
+	display: block;
+	cursor: pointer;
+	position: absolute;
+	border: 1px solid #D9D9D9;
+	border-radius: 3px;
+	background: #FFF;
+	box-shadow: inset 0 0 1px #FFF, inset 0 1px 7px #EBEBEB, 0 3px 6px -3px #BBB;
+	outline: none;
+}
+
+.defaultbar .j-sliderbar:after, .defaultbar .j-sliderbar:before {
+    content: "";
+    display: block;
+    position: absolute;
+    height: 14px;
+    width: 1px;
+    background: #E8E7E6;
+    left: 12px;
+    top: 6px;
+}
+
+.defaultbar .j-sliderbar:after {
+    left: 17px;
+}
+
+.defaultbar .j-sliderbar:hover {
+	border: 1px solid #BBBBBB;
+}
+
+.defaultbar .j-sliderbar-down {
+	background-color: #F0F0F0;
+}
