@@ -3,30 +3,37 @@
 
 	<head>
 		<meta charset="utf-8" />
-		<title></title>
+		<title>Jquery例子演示</title>
 		<link rel="stylesheet" type="text/css" href="css/jquery.jl.sliderbar.css" />
 		<script src="js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/jquery.jl.sliderBar.js" type="text/javascript" charset="utf-8"></script>
-		<!--<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />-->
 	</head>
+	<style type="text/css">
+		body {
+			color: #a48d66;
+			font: 14px/23px "microsoft yahei", proxima-nova-alt, "Proxima Nova Alt", sans-serif;
+		}
+	</style>
 
 	<body>
-		R:
+		<span id="cc1_output">
+			
+		</span>
 		<div id="cc1" class="slidercontainer" data-jl-value="0.9">
 
 		</div>
-		G:
+		<span id="cc2_output"></span>
 		<div id="cc2" class="slidercontainer">
 
 		</div>
-		B:
-		<div id="cc3" class="slidercontainer">
+		<br/>
 
-		</div>
+		
 
 	</body>
 
 	<script type="text/javascript">
+		//####################jquery.jl.sliderBar.js#########################
 		$("#cc1").sliderBar({
 			//			renderTo: '#cc1',
 			size: {
@@ -34,30 +41,22 @@
 				sliderWidth: 30
 			},
 			onChanging: function(percentage, e) {
-				window.console && console.log('cc1-percentage: %s %', percentage*100);
+				$("#cc1_output").text(percentage* 100);
+				window.console && console.log('cc1-percentage: %s %', percentage * 100);
 			}
 		});
-		
 		$('#cc2').sliderBar({
 			size: {
 				barWidth: 600,
 				sliderWidth: 30
 			},
-			enableKeyControl:true,
+			enableKeyControl: true,
 			onChanging: function(percentage, e) {
-				window.console && console.log('cc2-percentage: %s', percentage);
+				$("#cc2_output").text(percentage* 100);
+				window.console && console.log('cc2-percentage: %s', percentage* 100);
 			}
 		}).setDefValue(0.3);
 		
-		$('#cc3').sliderBar({
-			size: {
-				barWidth: 600,
-				sliderWidth: 30
-			},
-			onChanging: function(percentage, e) {
-				window.console && console.log('cc3-percentage: %s', percentage);
-			}
-		}).setDefValue(0.5);
 	</script>
 
 </html>
