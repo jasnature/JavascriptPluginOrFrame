@@ -1,7 +1,7 @@
 ﻿/*
- * name:sliderBar 滑块条jquery插件
+ * name:sliderBar 滑块条jquery插件,样式自由定制
  * ref:jquery.1.7.x.js以上
- * version: 1.0.0 (2016-05-17)
+ * version: 1.0.3 (2016-05-17)
  * author:jasnature
  * qq:276227015
  * blog:http://www.cnblogs.com/NatureSex/
@@ -160,7 +160,7 @@
 		this.setDefValue = function(v, callback) {
 			try {
 				if (typeof v == 'undefined' || v < 0 || v > 1) {
-					throw new Error('\'v\' must be a Float variable between 0 and 1.');
+					throw new Error('\'v\' 输入的值必须在 0 和 1之间.');
 				}
 				var s = this;
 				if (typeof s == 'undefined' ||
