@@ -1,0 +1,42 @@
+﻿/**
+ * jquery.jl.flashSlider.js 的插件样式
+ **/
+
+.slides {
+	width: 719px;
+	height: 260px;
+	overflow: hidden;
+	position: relative;
+}
+
+.slides-con>a {
+	display: block;
+	float: left;
+	width: 719px;
+	height: 260px;
+}
+
+.slider-nav {
+	width: 719px;
+	position: absolute;
+	left: 0;
+	bottom: 15px;
+	text-align: center;
+	z-index: 10;
+}
+
+.slider-nav>span {
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	text-align: center;
+	cursor: pointer;
+	background-color: #FFFFFF;
+	opacity: .3;
+	margin: 0 5px;
+	border-radius: 50%;
+}
+
+.slider-nav>span.on {
+	opacity: 1;
+}

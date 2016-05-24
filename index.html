@@ -3,32 +3,87 @@
 
 	<head>
 		<meta charset="utf-8" />
-		<title>Jquery例子演示</title>
-		<link rel="stylesheet" type="text/css" href="css/jquery.jl.sliderbar.css" />
+		<title>Jquery插件例子演示</title>
+		<link rel="stylesheet" type="text/css" href="css/jquery.jl.sliderBar.css" />
+		<link rel="stylesheet" type="text/css" href="css/jquery.jl.scrollPanel.css" />
+		<link rel="stylesheet" type="text/css" href="css/jquery.jl.flashSlider.css" />
 		<script src="js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/jquery.jl.sliderBar.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.jl.scrollPanel.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.jl.flashSlider.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<style type="text/css">
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		
 		body {
-			color: #a48d66;
-			font: 14px/23px "microsoft yahei", proxima-nova-alt, "Proxima Nova Alt", sans-serif;
+			color: blue;
+			font: 14px/1.5em "microsoft yahei", proxima-nova-alt, "Proxima Nova Alt", sans-serif;
+			margin: 10px;
 		}
 	</style>
 
 	<body>
+		滑块条
+		<hr />
 		<span id="cc1_output">
-			
+			90
 		</span>
 		<div id="cc1" class="slidercontainer" data-jl-value="0.9">
 
 		</div>
-		<span id="cc2_output"></span>
+		<span id="cc2_output">30</span>
 		<div id="cc2" class="slidercontainer">
 
 		</div>
-		<br/>
+		<br/> 无缝滚动
+		<hr />
+		<div id="scroll">
+			<ul id="scrollCon">
+				<li style="background-color: #666333;">123</li>
+				<li style="background-color: #A48D66;">345</li>
+				<li style="background-color: #32CD32;">567</li>
+				<li style="background-color: #A5B6C8;">789</li>
+			</ul>
+			<span class="arraw pre" id="prevBtn">
+	 			pre
+	 		</span>
+			<span class="arraw next" id="nextBtn">
+	 			next
+	 		</span>
+		</div>
 
-		
+		幻灯片
+		<hr />
+
+		<div class="slides">
+
+			<div id="slides" class="slides-con">
+				<a href="#" target="_blank " style="background-color: #666333;">
+					1111
+				</a>
+				<a href="#" target="_blank" style="background-color: #A48D66;"> 7777777777
+				</a>
+				<a href="#" target="_blank " style="background-color: #32CD32;">
+					88888
+				</a>
+				<a href="#" target="_blank" style="background-color: #A5B6C8;"> 9999
+				</a>
+				<a href="#" target="_blank" style="background-color: #FFF6C8;"> 9999
+				</a>
+				<a href="#" target="_blank" style="background-color: #DDD6C8;"> 9999
+				</a>
+				<a href="#" target="_blank" style="background-color: #A5BFFF;"> 9999
+				</a>
+				<a href="#" target="_blank" style="background-color: #A5BDDD;"> 9999
+				</a>
+			</div>
+			<div class="slider-nav" id="slider-nav">
+
+			</div>
+		</div>
 
 	</body>
 
@@ -41,7 +96,7 @@
 				sliderWidth: 30
 			},
 			onChanging: function(percentage, e) {
-				$("#cc1_output").text(percentage* 100);
+				$("#cc1_output").text(percentage * 100);
 				window.console && console.log('cc1-percentage: %s %', percentage * 100);
 			}
 		});
@@ -52,11 +107,29 @@
 			},
 			enableKeyControl: true,
 			onChanging: function(percentage, e) {
-				$("#cc2_output").text(percentage* 100);
-				window.console && console.log('cc2-percentage: %s', percentage* 100);
+				$("#cc2_output").text(percentage * 100);
+				window.console && console.log('cc2-percentage: %s', percentage * 100);
 			}
 		}).setDefValue(0.3);
-		
+		//####################jquery.jl.scrollImgs.js#########################
+		$('#scroll').scrollPanel({
+			prev: $('#prevBtn'),
+			next: $('#nextBtn'),
+			event: 'click',
+			auto: true
+		});
+		//####################jquery.jl.flashSlider.js#########################
+		$('#slides').flashSlider({
+			affect: 'scrollx', //效果  有scrollx|scrolly|fade|none
+			speed: 1000, //动画速度
+			interval: 3000, //时间间隔
+			auto: true, //自动滚动
+			trigger: 'mouseover', //触发事件 注意用mouseover代替hover
+			ctag: 'a', //内容标签 默认为<a>
+			switcher: '#slider-nav', //切换触发器id或class
+			stag: 'span', //切换器标签 默认为span
+			current: 'on', //当前切换器样式名称
+		});
 	</script>
 
 </html>
