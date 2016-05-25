@@ -11,6 +11,7 @@
 		<script src="js/jquery.jl.sliderBar.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/jquery.jl.scrollPanel.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/jquery.jl.flashSlider.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/laytpl.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<style type="text/css">
 		* {
@@ -85,7 +86,28 @@
 			</div>
 		</div>
 
+		laytpl模版引擎
+		<hr />
+		<div id="laytplOutput">
+
+		</div>
+
 	</body>
+
+	<script id="tt1" type="text/template">
+
+		<h3>{{ d.title }}</h3>
+		<p class="intro">{{ d.intro }}</p>
+		<ul>
+			{{# for(var i = 0, len = d.list.length; i< len; i++){ }} 
+				<li>
+				<span>{{ d.list[i].name }}</span>
+				<span>所在城市：{{ d.list[i].city }}</span>
+				</li>
+			{{# } }}
+		</ul>
+
+	</script>
 
 	<script type="text/javascript">
 		//####################jquery.jl.sliderBar.js#########################
@@ -129,6 +151,28 @@
 			switcher: '#slider-nav', //切换触发器id或class
 			stag: 'span', //切换器标签 默认为span
 			current: 'on', //当前切换器样式名称
+		});
+		//####################laytpl.js#########################
+		var data = {
+			title: '前端工程师',
+			intro: '一群码js的骚年，幻想改变世界，却被世界改变。',
+			list: [{
+				name: '贤心',
+				city: '杭州'
+			}, {
+				name: '嘎嘎',
+				city: '北京'
+			}, {
+				name: '浅浅',
+				city: '杭州'
+			}, {
+				name: 'Dem',
+				city: '北京'
+			}]
+		};
+		var gettpl = $('#tt1').html();
+		laytpl(gettpl).render(data, function(html) {
+			$('#laytplOutput').html(html);
 		});
 	</script>
 
