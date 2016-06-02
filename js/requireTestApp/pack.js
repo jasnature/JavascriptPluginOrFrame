@@ -1,5 +1,6 @@
-// a.js
+//每个模块的名称最好不要自己命名，后面可以使用打包工具自动生成对应的xx.js的xx名称
 
+// a.js
 define("jqload",['../jquery-1.8.0.min'], function() {
 
 	console.log($);
