@@ -1,0 +1,18 @@
+{
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-less": "^3.1.0"
+  },
+  "name": "testgulp",
+  "description": "个人开发和个人收集的一些jquery插件",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "gulp": "^3.9.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jasnature",
+  "license": "ISC"
+}

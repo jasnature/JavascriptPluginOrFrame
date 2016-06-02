@@ -4,26 +4,28 @@
 //
 //3、如果使用了requirejs模块载入框架，define(['jquery'], factory)这句就是让插件支持AMD规范，当然['jquery']这个命名可以使用paths重命名覆盖
 //
-//4、function ($, window, document, undefined) 这里面的undefined是为了防止在引入其他js文件的时候，使用被重写了的undefined
+//4、function ($, undefined) 这里面的undefined是为了防止在引入其他js文件的时候，使用被重写了的undefined
 //
 //5、_init是插件定义的，用于初始化插件。
 
-;(function (factory) {
-    'use strict';
-    // Register as an AMD module, compatible with script loaders like RequireJS.
-    if (typeof define === 'function' && define.amd) {
-        define(['jquery'], factory);
-    }
-    else {
-        factory(jQuery, window, document);
-    }
-}(function ($, window, document, undefined) {
-    'use strict';
+;
+(function(factory) {
+	'use strict';
+	if (typeof module === 'object' && typeof module.exports === 'object') {
+		//使用function(require, exports, module)这样方式的时候进入
+		factory(require('jquery'));
+	} else if (typeof define === 'function' && define.amd) {
+		// Register as an AMD module, compatible with script loaders like RequireJS.
+		define(['jquery'], factory);
+	} else {
+		factory(jQuery);
+	}
+}(function($, undefined) {
+	'use strict';
 
-　　 //中间插件代码
+	　　 //中间插件代码
 
-    $.fn.jslide = function (method) {
-        return _init.apply(this, arguments);
-    };
+	$.fn.jslide = function(method) {
+		return _init.apply(this, arguments);
+	};
 }));
-
