@@ -1,10 +1,10 @@
-# JQueryPluginOpen
+# JavascriptPluginOrFrame
 个人开发和收集的一些jquery插件、常用框架、构建工具等，并写出例子或演示
 
 # 目前包含：
 
 ###jquery插件或框架
-1. >jquery.jl.flashSlider 幻灯片插件
+1. jquery.jl.flashSlider 幻灯片插件
 2. jquery.jl.scrollPanel 无缝滚动内容插件
 3. jquery.jl.sliderBar 滑块条jquery插件
 4. jquery.paginate 分页组件
