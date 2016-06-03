@@ -10,7 +10,7 @@
 ;
 (function($, window, document, undefined) {
 	$.fn.flashSlider = function(options) {
-		
+
 		var settings = {
 			affect: 'scrollx', //效果  有scrollx|scrolly|fade|none
 			speed: 1000, //动画速度
@@ -40,11 +40,12 @@
 
 		//生成切换按钮
 		if ($stag == null || $stag.length != $contents.length) {
-			$switcher.children().remove();
+			$switcher.empty();
+			var alltags = "";
 			for (var i = 0; i < $contents.length; i++) {
-				$switcher.append($("<" + settings.stag + " ></" + settings.stag + ">"));
+				alltags += "<" + settings.stag + " ></" + settings.stag + ">";
 			}
-
+			$switcher.append(alltags);
 			$stag = $switcher.find(settings.stag);
 			$stag.first().addClass("on");
 		}
