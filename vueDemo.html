@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<script src="js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<title>Vue演示例子</title>
+		<style type="text/css">
+			em {
+				display: block;
+				font-size: 18px;
+				color: green;
+				font-style: normal;
+				font-weight: bold;
+				width: 100%;
+				background-color: #A5B6C8;
+				margin: 10px 0px;
+			}
+			
+			ul {
+				list-style-type: decimal;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div id="sim1">
+			<em>#简单显示、双向绑定</em>
+			<p>{{msg}}</p>
+			<input type="text" v-model="msg" />
+
+			<em>#列表显示、新增项</em> 名称:
+			<input type="text" v-model="newtodo.name" /> 年龄：<input type="text" v-model="newtodo.age" />
+			<input type="button" v-on:click="addTodo" value="新增" />
+			<span style="color: red;">
+				{{errormsg}}
+			</span>
+			<ul>
+				<li v-for="mo in todos">
+					名称：{{mo.name}} 年龄：{{mo.age}} 修改名称:<input type="text" v-model="mo.name" />
+					<input type="button" value="保存修改" v-on:click="saveName(mo)" />
+					<input type="button" value="删除" v-on:click="removeTodo($index)" />
+				</li>
+			</ul>
+		</div>
+
+	</body>
+
+	<script type="text/javascript">
+		var sim1 = new Vue({
+			el: "#sim1",
+			data: {
+				msg: "hello vue!",
+				newtodo: {
+					name: '',
+					age: 0
+				},
+				errormsg:""
+				,
+				todos: [{
+					name: '123',
+					age: 23
+				}, {
+					name: '456',
+					age: 15
+				}, {
+					name: '阿萨德',
+					age: 45
+				}, {
+					name: '不会',
+					age: 18
+				}]
+			},
+			methods: {
+				saveName: function(mo) {
+					console.log(mo.name + "->保存成功!");
+				},
+				addTodo: function() {
+					if (this.newtodo.name.trim()) {
+						this.todos.push({
+							name: this.newtodo.name,
+							age: this.newtodo.age
+						});
+						
+						this.newtodo = {
+							name: '',
+							age: 0
+						};
+					}else{
+						this.errormsg="请填写名称";
+					}
+				},
+				removeTodo: function(index) {
+					this.todos.splice(index, 1, {
+						name: '被杀',
+						age: 0
+					});
+				}
+			}
+		})
+	</script>
+
+</html>
