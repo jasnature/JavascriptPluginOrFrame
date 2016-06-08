@@ -35,17 +35,22 @@
 
 			<em>#列表显示、新增项</em> 名称:
 			<input type="text" v-model="newtodo.name" /> 年龄：<input type="text" v-model="newtodo.age" />
-			<input type="button" v-on:click="addTodo" value="新增" />
+			<input type="button" v-on:click="addTodo" value="新增" :style="{fontSize: '18px' }" />
 			<span style="color: red;">
 				{{errormsg}}
 			</span>
-			<ul>
-				<li v-for="mo in todos">
-					名称：{{mo.name}} 年龄：{{mo.age}} 修改名称:<input type="text" v-model="mo.name" />
-					<input type="button" value="保存修改" v-on:click="saveName(mo)" />
-					<input type="button" value="删除" v-on:click="removeTodo($index)" />
-				</li>
-			</ul>
+			<table>
+				<tr v-for="mo in todos" v-if="mo.name!=123">
+					<td v-bind:href.literal="不解析">{{$index+1}}</td>
+					<td v-bind:alt="mo.name">名称：{{{mo.name | conlog}}} </td>
+					<td :data-haha="mo.age">年龄：{{mo.age}} </td>
+					<td :class="mo.cs">年龄（虚岁）：{{xage}} </td>
+					<td :class="[mo.ts.classA,mo.ts.classB,mo.cs]">全名：{{fullname}} </td>
+					<td>修改名称:<input type="text" v-model="mo.name" />
+						<input type="button" value="保存修改(简写绑定事件)" @click="saveName(mo)" />
+						<input type="button" value="删除" v-on:click="removeTodo()" /></td>
+				</tr>
+			</table>
 		</div>
 
 	</body>
@@ -59,20 +64,26 @@
 					name: '',
 					age: 0
 				},
-				errormsg:""
-				,
+				errormsg: "",
 				todos: [{
-					name: '123',
-					age: 23
+					name: '<b>123<b/>',
+					age: 23,
+					cs: {
+						tb: true,
+						lb: false,
+						rb: "rb"
+					},
+					ts: {
+						classA: 'class-a',
+						classB: 'class-b'
+					}
 				}, {
 					name: '456',
-					age: 15
-				}, {
-					name: '阿萨德',
-					age: 45
-				}, {
-					name: '不会',
-					age: 18
+					age: 15,
+					ts: {
+						classA: 'class-c',
+						classB: 'class-d'
+					}
 				}]
 			},
 			methods: {
@@ -85,23 +96,40 @@
 							name: this.newtodo.name,
 							age: this.newtodo.age
 						});
-						
 						this.newtodo = {
 							name: '',
 							age: 0
 						};
-					}else{
-						this.errormsg="请填写名称";
+					} else {
+						this.errormsg = "请填写名称";
 					}
 				},
 				removeTodo: function(index) {
-					this.todos.splice(index, 1, {
-						name: '被杀',
-						age: 0
-					});
+					this.todos.splice(index, 1);
+				}
+			},
+			filters: {
+				conlog: function(ag1) {
+					console.log(ag1);
+				}
+			},
+			computed: {
+				xage: function(mo) {
+					return "无";
+				},
+				fullname: {
+					get: function() {
+						return "getfullname";
+					},
+					set: function(newValue) {
+						return this.newtodo.name = newValue;
+					}
 				}
 			}
-		})
+		});
+		sim1.$watch("newtodo", function(newVal, oldVal) {
+			console.log("%o===%o", newVal, oldVal);
+		});
 	</script>
 
 </html>
