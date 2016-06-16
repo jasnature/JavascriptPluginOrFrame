@@ -25,7 +25,9 @@
 
 	　　 //中间插件代码
 
-	$.fn.jslide = function(method) {
+	$.fn.你的插件名称 = function(method) {
+		//这里是你的内部初始化方法
+		
 		return _init.apply(this, arguments);
 	};
 }));
