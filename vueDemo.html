@@ -18,10 +18,23 @@
 				width: 100%;
 				background-color: #A5B6C8;
 				margin: 10px 0px;
+				box-shadow: #666666 2px 2px 5px 1px;
 			}
 			
 			ul {
 				list-style-type: decimal;
+			}
+			
+			table {
+				border: 1px solid #A5A5A5;
+				border-collapse: collapse;
+				border-spacing: 0px;
+			}
+			
+			tr,
+			td {
+				border: 1px solid #A5A5A5;
+				border-collapse: collapse;
 			}
 		</style>
 	</head>
@@ -29,17 +42,20 @@
 	<body>
 
 		<div id="sim1">
-			<em>#简单显示、双向绑定</em>
+			<em>#简单显示、双向绑定，参数特性</em>
 			<p>{{msg}}</p>
-			<input type="text" v-model="msg" />
+			立即<input type="text" v-model="msg" />
+			移出文本框才更新<input type="text" v-model="msg" lazy/> 
+			我会延迟500毫秒<input type="text" v-model="msg" debounce="500"/>
+			数值<input type="text" v-model="num" number/>{{num}}
 
 			<em>#列表渲染、新增项，删除项，样式绑定，条件渲染，模版包含，隐藏显示<span v-show="newtodo.name!==''">[正在输入]</span></em>
 
 			<div v-if="Math.random() > 0.5">
-				心情：好
+				今天心情：好
 			</div>
 			<div v-else>
-				心情：不好
+				今天心情：不好
 			</div>
 
 			<template v-if="newtodo.name==123">[不容许添加{{newtodo.name}}]</template>
@@ -55,6 +71,7 @@
 					<td v-bind:alt="mo.name">名称：{{{mo.name | conlog}}} </td>
 					<td :data-haha="mo.age">年龄：{{mo.age}} </td>
 					<td :class="mo.cs">年龄（虚岁）：{{xage}} </td>
+					<td :class="mo.cs">是否男：<input type="checkbox" v-model="mo.sex" name="{{mo.name}}" /> </td>
 					<td :class="[mo.ts.classA,mo.ts.classB,mo.cs]">全名：{{fullname}} </td>
 					<td :class="[mo.ts.classA,mo.ts.classB,mo.cs]">当前对象属性：
 						<ul>
@@ -69,27 +86,43 @@
 				</tr>
 
 			</table>
-			
-			<em>#事件修饰符，按键修饰符</em>
-			event.stopPropagation()
+
+			<em>#事件修饰符，按键修饰符</em> 方法自动添加：event.stopPropagation()
 			<input type="button" value="sayhi-stop" v-on:click.stop="sayhi" />
-			<br/>
-			event.preventDefault() 
-			<input type="button" value="sayhi-prevent" v-on:click.prevent="sayhi" />
-			<br/>
-			也可以一起叠加
+			<br/> 方法自动添加：event.preventDefault()
+			<input type="button" value="sayhi-prevent" v-on:click.prevent="sayhi" /> 2个叠加
 			<input type="button" value="sayhi-prevent-stop" v-on:click.stop.prevent="sayhi" />
-			<br/>
-			可以自定义别名或使用预置别名，还可以使用单子母按键
+			<br/> 可以自定义别名或使用预置别名，还可以使用单子母按键
 			<!--
             	// 可以使用 @keyup.f1 
             	Vue.directive('on').keyCodes.f1 = 112
             -->
-			
+
 			<input type="text" value="sayhi-enter，按回车才触发" v-on:keyup.enter="sayhi" />
+
+			<em>#表单控件绑定</em> 单选
+			<br />
+			<input type="checkbox" v-model="domake" id="doit" :true-value="a" :false-value="b"  /> <label for="doit">做吗？</label> {{domake}}
+			<br /> 多个勾选框，绑定到同一个数组：
+			<br />
+			<input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+			<label for="jack">Jack</label>
+			<input type="checkbox" id="john" value="John" v-model="checkedNames">
+			<label for="john">John</label>
+			<input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+			<label for="mike">Mike</label>
+			<span>当前选择名称: {{ checkedNames | json }}</span>
+<br>
+			<select v-model="selected" multiple>
+			  <option selected>A</option>
+			  <option>B</option>
+			  <option>C</option>
+			</select>
+			<span>Selected: {{ selected | json }}</span>
 			
-			<em>#表单控件绑定</em>
 			
+			<em>#过渡</em>
+
 		</div>
 
 	</body>
@@ -98,7 +131,13 @@
 		var sim1 = new Vue({
 			el: "#sim1",
 			data: {
+				a:"a",
+				b:"b",
 				msg: "hello vue!",
+				num:1,
+				domake: false,
+				checkedNames: [],
+				selected:[],
 				newtodo: {
 					name: '',
 					age: 0
@@ -107,6 +146,7 @@
 				todos: [{
 					name: '<b>123<b/>',
 					age: 23,
+					sex: true,
 					cs: {
 						tb: true,
 						lb: false,
@@ -147,7 +187,7 @@
 				removeTodo: function(index) {
 					this.todos.splice(index, 1);
 				},
-				sayhi:function () {
+				sayhi: function() {
 					alert("sayhi!");
 				}
 			},
