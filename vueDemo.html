@@ -7,6 +7,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<script src="js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="css/animate.css" />
 		<title>Vue演示例子</title>
 		<style type="text/css">
 			em {
@@ -36,6 +37,21 @@
 				border: 1px solid #A5A5A5;
 				border-collapse: collapse;
 			}
+			
+			.expand-transition {
+				transition: all 2s ease;
+				height: 30px;
+				padding: 10px;
+				background-color: #eee;
+				overflow: hidden;
+			}
+			
+			.expand-enter,
+			.expand-leave {
+				height: 0;
+				padding: 0 10px;
+				opacity: 0.3;
+			}
 		</style>
 	</head>
 
@@ -44,10 +60,10 @@
 		<div id="sim1">
 			<em>#简单显示、双向绑定，参数特性</em>
 			<p>{{msg}}</p>
-			立即<input type="text" v-model="msg" />
-			移出文本框才更新<input type="text" v-model="msg" lazy/> 
-			我会延迟500毫秒<input type="text" v-model="msg" debounce="500"/>
-			数值<input type="text" v-model="num" number/>{{num}}
+			立即<input type="text" v-model="msg" /> 移出文本框才更新
+			<input type="text" v-model="msg" lazy/> 我会延迟500毫秒
+			<input type="text" v-model="msg" debounce="500" /> 数值
+			<input type="text" v-model="num" number/>{{num}}
 
 			<em>#列表渲染、新增项，删除项，样式绑定，条件渲染，模版包含，隐藏显示<span v-show="newtodo.name!==''">[正在输入]</span></em>
 
@@ -102,7 +118,7 @@
 
 			<em>#表单控件绑定</em> 单选
 			<br />
-			<input type="checkbox" v-model="domake" id="doit" :true-value="a" :false-value="b"  /> <label for="doit">做吗？</label> {{domake}}
+			<input type="checkbox" v-model="domake" id="doit" :true-value="a" :false-value="b" /> <label for="doit">做吗？</label> {{domake}}
 			<br /> 多个勾选框，绑定到同一个数组：
 			<br />
 			<input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
@@ -111,17 +127,21 @@
 			<label for="john">John</label>
 			<input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
 			<label for="mike">Mike</label>
-			<span>当前选择名称: {{ checkedNames | json }}</span>
-<br>
+			<span transition="expand">当前选择名称: {{ checkedNames | json }}</span>
+			<br>
 			<select v-model="selected" multiple>
 			  <option selected>A</option>
 			  <option>B</option>
 			  <option>C</option>
 			</select>
 			<span>Selected: {{ selected | json }}</span>
-			
-			
+
 			<em>#过渡</em>
+			<input type="checkbox" name="" id="" value="" v-model="showtran" />显示按钮
+			<input type="button" id="" value="我飞来咯，我非走咯" v-if="showtran" class="animated" transition="bounce" />
+			
+			<input type="checkbox" name="" id="" value="" v-model="showtran" />自定义过渡钩子
+			<input type="button" id="" value="我飞来咯，我非走咯" v-if="showtran" class="animated" transition="bounceWO" />
 
 		</div>
 
@@ -131,13 +151,14 @@
 		var sim1 = new Vue({
 			el: "#sim1",
 			data: {
-				a:"a",
-				b:"b",
+				a: "a",
+				b: "b",
 				msg: "hello vue!",
-				num:1,
+				num: 1,
 				domake: false,
+				showtran: false,
 				checkedNames: [],
-				selected:[],
+				selected: [],
 				newtodo: {
 					name: '',
 					age: 0
@@ -211,6 +232,44 @@
 				}
 			}
 		});
+
+		//过渡触发别名
+		Vue.transition('bounce', {
+			enterClass: 'bounceInLeft',
+			leaveClass: 'bounceOutRight'
+		})
+
+		//过渡钩子，这里就需要自己添加过渡样式，框架不会自动
+		Vue.transition('bounceWO', {
+
+			beforeEnter: function(el) {
+				$(el).addClass("fadeInDown");
+				console.log("beforeEnter");
+			},
+			enter: function(el,done) {
+				console.log('enter');
+			},
+			afterEnter: function(el) {
+				console.log('afterEnter');
+			},
+			enterCancelled: function(el) {
+				// handle cancellation
+			},
+
+			beforeLeave: function(el) {
+				$(el).addClass("fadeInUp");
+			},
+			leave: function(el) {
+				console.log('leave');
+			},
+			afterLeave: function(el) {
+				console.log('afterLeave');
+			},
+			leaveCancelled: function(el) {
+				// handle cancellation
+			}
+		})
+
 		//属性变化监控
 		sim1.$watch("newtodo", function(newVal, oldVal) {
 			console.log("%o===%o", newVal, oldVal);
