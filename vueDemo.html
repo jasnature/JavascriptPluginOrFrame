@@ -10,16 +10,24 @@
 		<link rel="stylesheet" type="text/css" href="css/animate.css" />
 		<title>Vue演示例子</title>
 		<style type="text/css">
-			em {
+			em,
+			i {
 				display: block;
 				font-size: 18px;
-				color: green;
+				color: white;
 				font-style: normal;
 				font-weight: bold;
-				width: 100%;
-				background-color: #A5B6C8;
+				/*width: 100%;*/
+				background-color: #966400;
 				margin: 10px 0px;
 				box-shadow: #666666 2px 2px 5px 1px;
+				padding: 3px;
+			}
+			
+			i {
+				background-color: #9e9e9e;
+				margin-left: 15px;
+				font-size: 14px;
 			}
 			
 			ul {
@@ -136,20 +144,68 @@
 			</select>
 			<span>Selected: {{ selected | json }}</span>
 
-			<em>#过渡</em>
-			<input type="checkbox" name="" id="" value="" v-model="showtran" />显示按钮
+			<em>#过渡(分为几个阶段，且可以使用纯css和js动态添加)</em>
+			<input type="checkbox" name="" id="" value="" v-model="showtran" />显示按钮（纯css）
 			<input type="button" id="" value="我飞来咯，我非走咯" v-if="showtran" class="animated" transition="bounce" />
-			
-			<input type="checkbox" name="" id="" value="" v-model="showtran" />自定义过渡钩子
+
+			<input type="checkbox" name="" id="" value="" v-model="showtran" />自定义过渡钩子（js）
 			<input type="button" id="" value="我飞来咯，我非走咯" v-if="showtran" class="animated" transition="bounceWO" />
+
+			<em>#组件</em>
+			<i>#使用组件</i>
+
+			<my-star>
+				<my-starchild></my-starchild>
+			</my-star>
+
+			<my-star1></my-star1>
+			IS特性可以自动判断是否适合当前元素嵌套
+			<select name="">
+				<option is="my-star1"></option>
+				<td is="my-star1"></td>
+			</select>
+			
+			
+			<i>#Props</i>
 
 		</div>
 
 	</body>
 
 	<script type="text/javascript">
+		//使用组件
+		var mystarchild = Vue.extend({
+			template: '<div>A start child component!</div>'
+		})
+
+		var mystar = Vue.extend({
+			//2个特殊选项-1
+			data: function() {
+				return {
+					a: 1
+				};
+			}, //2个特殊选项-2
+			el: function() {
+				return "";
+			},
+			template: '<div>A start component!</div>',
+
+			//下级局部注册(只能在my-star组件内使用)
+			components: {
+				"my-starchild": mystarchild
+			}
+		});
+
+		//全局注册
+		Vue.component("my-star", mystar);
+		//其他注册方式，内部调用extend
+		Vue.component("my-star1", {
+			template: '<option>A start1 component!</option>'
+		});
+
 		var sim1 = new Vue({
-			el: "#sim1",
+			el: "#sim1", //作用区域ID
+			//数据操作对象
 			data: {
 				a: "a",
 				b: "b",
@@ -212,6 +268,7 @@
 					alert("sayhi!");
 				}
 			},
+			//过滤器
 			filters: {
 				conlog: function(ag1) {
 					console.log(ag1);
@@ -246,7 +303,7 @@
 				$(el).addClass("fadeInDown");
 				console.log("beforeEnter");
 			},
-			enter: function(el,done) {
+			enter: function(el, done) {
 				console.log('enter');
 			},
 			afterEnter: function(el) {
