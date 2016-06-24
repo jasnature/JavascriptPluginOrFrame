@@ -11,7 +11,8 @@
 		<title>Vue演示例子</title>
 		<style type="text/css">
 			em,
-			i {
+			i,
+			h3 {
 				display: block;
 				font-size: 18px;
 				color: white;
@@ -24,10 +25,18 @@
 				padding: 3px;
 			}
 			
+			em {
+				margin-left: 10px;
+			}
+			
 			i {
 				background-color: #9e9e9e;
-				margin-left: 15px;
+				margin-left: 20px;
 				font-size: 14px;
+			}
+			
+			h3 {
+				background-color: green;
 			}
 			
 			ul {
@@ -66,6 +75,7 @@
 	<body>
 
 		<div id="sim1">
+			<h3>#我是VUE的第一个组件：sim1</h3>
 			<em>#简单显示、双向绑定，参数特性</em>
 			<p>{{msg}}</p>
 			立即<input type="text" v-model="msg" /> 移出文本框才更新
@@ -152,185 +162,50 @@
 			<input type="button" id="" value="我飞来咯，我非走咯" v-if="showtran" class="animated" transition="bounceWO" />
 
 			<em>#组件</em>
-			<i>#使用组件</i>
-
+			<i>#使用组件</i> 全局注册
 			<my-star>
-				<my-starchild></my-starchild>
 			</my-star>
-
-			<my-star1></my-star1>
-			IS特性可以自动判断是否适合当前元素嵌套
+			<br /> 局部sim1的组件注册
+			<my-starchild></my-starchild>
+			<br /> IS特性可以自动判断是否适合当前元素嵌套
 			<select name="">
 				<option is="my-star1"></option>
 				<td is="my-star1"></td>
 			</select>
+
+			<i>#Props</i> 静态赋值：
+			<my-star msg="A start component" my-Start="999">
+			</my-star>
+			<br /> 动态赋值：父组件数据传递绑定 msg
+			<input type="text" v-model="parentMsg" /> my-Start<input type="text" v-model="num" />
+			<my-star v-bind:msg="parentMsg" :my-Start="num">
+			</my-star>
+			<br /> 给绑定添加描叙类型：sync双向 once 单项
+			<my-star v-bind:msg.sync="parentMsg" :my-Start.once="num">
+			</my-star>
+			<br /> 属性值验证
+			<my-star1></my-star1>
+
+			<i>#父子组件通信</i> 自定义事件：使用 $on() 监听事件； 使用 $emit() 在它上面触发事件； 使用 $dispatch() 派发事件，事件沿着父链冒泡； 使用 $broadcast() 广播事件，事件向下传导给所有的后代。
+			<br />
+			子组件引用 命名为starc：
+			<my-starchild v-ref:starc ></my-starchild>
 			
-			
-			<i>#Props</i>
+
+		</div>
+
+		<h3>#我是VUE的第二个组件：sim2</h3>
+		<div id="sim2">
+			<em>#组件</em> 局部sim1的组件注册组件在 my-starchild无效
+			<my-starchild></my-starchild>
 
 		</div>
 
 	</body>
 
 	<script type="text/javascript">
-		//使用组件
-		var mystarchild = Vue.extend({
-			template: '<div>A start child component!</div>'
-		})
-
-		var mystar = Vue.extend({
-			//2个特殊选项-1
-			data: function() {
-				return {
-					a: 1
-				};
-			}, //2个特殊选项-2
-			el: function() {
-				return "";
-			},
-			template: '<div>A start component!</div>',
-
-			//下级局部注册(只能在my-star组件内使用)
-			components: {
-				"my-starchild": mystarchild
-			}
-		});
-
-		//全局注册
-		Vue.component("my-star", mystar);
-		//其他注册方式，内部调用extend
-		Vue.component("my-star1", {
-			template: '<option>A start1 component!</option>'
-		});
-
-		var sim1 = new Vue({
-			el: "#sim1", //作用区域ID
-			//数据操作对象
-			data: {
-				a: "a",
-				b: "b",
-				msg: "hello vue!",
-				num: 1,
-				domake: false,
-				showtran: false,
-				checkedNames: [],
-				selected: [],
-				newtodo: {
-					name: '',
-					age: 0
-				},
-				errormsg: "",
-				todos: [{
-					name: '<b>123<b/>',
-					age: 23,
-					sex: true,
-					cs: {
-						tb: true,
-						lb: false,
-						rb: "rb"
-					},
-					ts: {
-						classA: 'class-a',
-						classB: 'class-b'
-					}
-				}, {
-					name: '456',
-					age: 15,
-					ts: {
-						classA: 'class-c',
-						classB: 'class-d'
-					}
-				}]
-			},
-			//公共方法
-			methods: {
-				saveName: function(mo) {
-					console.log(mo.name + "->保存成功!");
-				},
-				addTodo: function() {
-					if (this.newtodo.name.trim()) {
-						this.todos.push({
-							name: this.newtodo.name,
-							age: this.newtodo.age
-						});
-						this.newtodo = {
-							name: '',
-							age: 0
-						};
-					} else {
-						this.errormsg = "请填写名称";
-					}
-				},
-				removeTodo: function(index) {
-					this.todos.splice(index, 1);
-				},
-				sayhi: function() {
-					alert("sayhi!");
-				}
-			},
-			//过滤器
-			filters: {
-				conlog: function(ag1) {
-					console.log(ag1);
-				}
-			},
-			//计算属性
-			computed: {
-				xage: function(mo) {
-					return "无";
-				},
-				fullname: {
-					get: function() {
-						return "getfullname";
-					},
-					set: function(newValue) {
-						return this.newtodo.name = newValue;
-					}
-				}
-			}
-		});
-
-		//过渡触发别名
-		Vue.transition('bounce', {
-			enterClass: 'bounceInLeft',
-			leaveClass: 'bounceOutRight'
-		})
-
-		//过渡钩子，这里就需要自己添加过渡样式，框架不会自动
-		Vue.transition('bounceWO', {
-
-			beforeEnter: function(el) {
-				$(el).addClass("fadeInDown");
-				console.log("beforeEnter");
-			},
-			enter: function(el, done) {
-				console.log('enter');
-			},
-			afterEnter: function(el) {
-				console.log('afterEnter');
-			},
-			enterCancelled: function(el) {
-				// handle cancellation
-			},
-
-			beforeLeave: function(el) {
-				$(el).addClass("fadeInUp");
-			},
-			leave: function(el) {
-				console.log('leave');
-			},
-			afterLeave: function(el) {
-				console.log('afterLeave');
-			},
-			leaveCancelled: function(el) {
-				// handle cancellation
-			}
-		})
-
-		//属性变化监控
-		sim1.$watch("newtodo", function(newVal, oldVal) {
-			console.log("%o===%o", newVal, oldVal);
-		});
 	</script>
+
+	<script type="text/javascript" src="js/vuedemojs/sim1.js"></script>
 
 </html>
