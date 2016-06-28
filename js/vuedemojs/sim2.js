@@ -1,5 +1,5 @@
 var sim2=new Vue({
-	el:'#sim2'
+	el:'#sim2',
 	
 	data: {
 		

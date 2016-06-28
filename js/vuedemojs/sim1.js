@@ -78,6 +78,11 @@ Vue.component("my-star1", {
 });
 
 var sim1 = new Vue({
+
+	//下级局部注册(只能在sim1组件内使用)
+	components: {
+		"my-starchild": mystarchild
+	},
 	el: "#sim1", //作用区域ID
 	//数据操作对象
 	data: {
@@ -163,11 +168,6 @@ var sim1 = new Vue({
 				return this.newtodo.name = newValue;
 			}
 		}
-	},
-
-	//下级局部注册(只能在sim1组件内使用)
-	components: {
-		"my-starchild": mystarchild
 	},
 
 	// 在创建实例时 `events` 选项简单地调用 `$on`

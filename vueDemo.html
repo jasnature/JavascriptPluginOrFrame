@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -23,6 +23,7 @@
 				margin: 10px 0px;
 				box-shadow: #666666 2px 2px 5px 1px;
 				padding: 3px;
+				border-left: 4px solid #32CD32;
 			}
 			
 			em {
@@ -188,17 +189,15 @@
 
 			<i>#父子组件通信</i> 自定义事件：使用 $on() 监听事件； 使用 $emit() 在它上面触发事件； 使用 $dispatch() 派发事件，事件沿着父链冒泡； 使用 $broadcast() 广播事件，事件向下传导给所有的后代。
 			<br />
-			子组件引用 命名为starc：
+			子组件引用 命名为starc：通过sim1.$refs.starc访问
 			<my-starchild v-ref:starc ></my-starchild>
 			
-
 		</div>
 
 		<h3>#我是VUE的第二个组件：sim2</h3>
 		<div id="sim2">
 			<em>#组件</em> 局部sim1的组件注册组件在 my-starchild无效
 			<my-starchild></my-starchild>
-
 		</div>
 
 	</body>
@@ -207,5 +206,5 @@
 	</script>
 
 	<script type="text/javascript" src="js/vuedemojs/sim1.js"></script>
-
+	<script src="js/vuedemojs/sim2.js" type="text/javascript" charset="utf-8"></script>
 </html>
