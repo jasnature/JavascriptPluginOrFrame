@@ -188,10 +188,27 @@
 			<my-star1></my-star1>
 
 			<i>#父子组件通信</i> 自定义事件：使用 $on() 监听事件； 使用 $emit() 在它上面触发事件； 使用 $dispatch() 派发事件，事件沿着父链冒泡； 使用 $broadcast() 广播事件，事件向下传导给所有的后代。
-			<br />
-			子组件引用 命名为starc：通过sim1.$refs.starc访问
-			<my-starchild v-ref:starc ></my-starchild>
+			<br /> 子组件引用 命名为starc：通过sim1.$refs.starc访问
+			<my-starchild v-ref:starc>
+				<b>【我是大大，我会替换模块的默认slot节点，没有slot我就消失了】</b>
+				<a slot="one" href="javascript:;">我是具名模版，我可以根据模版位置替换</a>
+			</my-starchild>
+			<p>组件其他特性：keep-alive保持在内存中，activate钩子，切换到组件前操作，transition-mode切换过渡</p>
+			<i>杂项</i>
+
+			<my-starchild v-for="item in todos" :item="item" :index="$index">
+				<b>【{{index}}我是[{{{item.name}}}]，我是父节点的数据循环的】</b>
+
+			</my-starchild>
+			<p>还有其他杂项：编写可复用组件 异步组件 资源命名约定 递归组件 片断实例 内联模板
+			</p>
+
+			<em>深入响应式原理</em>
+
+			<i>如何追踪变化，变化检测问题，初始化数据，异步更新队列，计算属性的奥秘</i>
 			
+			
+
 		</div>
 
 		<h3>#我是VUE的第二个组件：sim2</h3>
@@ -207,4 +224,5 @@
 
 	<script type="text/javascript" src="js/vuedemojs/sim1.js"></script>
 	<script src="js/vuedemojs/sim2.js" type="text/javascript" charset="utf-8"></script>
+
 </html>

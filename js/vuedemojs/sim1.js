@@ -2,7 +2,8 @@
 
 //这个组件只注册到sim1里面
 var mystarchild = Vue.extend({
-	template: '<span>my name is mystarchild component!</span>'
+	template: '<div><slot></slot>。**我是模版原始的内容，哈哈，你替换不掉我**。<slot name="one"></slot></div>',
+//	props:['item','index']
 })
 
 var mystar = Vue.extend({
