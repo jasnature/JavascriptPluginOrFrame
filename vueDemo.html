@@ -203,11 +203,16 @@
 			<p>还有其他杂项：编写可复用组件 异步组件 资源命名约定 递归组件 片断实例 内联模板
 			</p>
 
-			<em>深入响应式原理</em>
+			<em>深入响应式原理，自定义指令，自定义过滤器，混合，插件及编写</em>
 
-			<i>如何追踪变化，变化检测问题，初始化数据，异步更新队列，计算属性的奥秘</i>
-			
-			
+			<i>响应式原理：如何追踪变化，变化检测问题，初始化数据，异步更新队列，计算属性的奥秘</i>
+			<ul>
+				<li>使用<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty" >Object.defineProperty</a >生成属性getter，setter来跟踪变化
+			sim1.$log()输出友好的data对象（未被observer）</li>
+			<li>使用sim1.$set(key,value)来后期给data添加属性，并添加跟踪</li>
+			<li>初始化data建议把所有字段定义完整，避免全部重新生成一次跟踪</li>
+			</ul>
+			<i>指令</i>
 
 		</div>
 
