@@ -207,13 +207,28 @@
 
 			<i>响应式原理：如何追踪变化，变化检测问题，初始化数据，异步更新队列，计算属性的奥秘</i>
 			<ul>
-				<li>使用<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty" >Object.defineProperty</a >生成属性getter，setter来跟踪变化
+				<li>使用<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty</a >生成属性getter，setter来跟踪变化
 			sim1.$log()输出友好的data对象（未被observer）</li>
 			<li>使用sim1.$set(key,value)来后期给data添加属性，并添加跟踪</li>
 			<li>初始化data建议把所有字段定义完整，避免全部重新生成一次跟踪</li>
 			</ul>
 			<i>指令</i>
+			<ul>
+				<li>bind：只调用一次，在指令第一次绑定到元素上时调用。</li>
+				<li>update： 在 bind 之后立即以初始值为参数第一次调用，之后每当绑定值变化时调用，参数为新值与旧值。</li>
+				<li>unbind：只调用一次，在指令从元素上解绑时调用。</li>
+				<li>Vue.directive(id, definition)全局注册，directives选项局部注册</li>
+			</ul>
+			<input type="text" v-my-tive="msg" v-model="msg" />
+			<i>自定义过滤器</i>
+			<ul>
+				<li>类似于自定义指令，可以用全局方法 Vue.filter() 注册一个自定义过滤器</li>
+				<li>双向过滤器</li>
+			</ul>
+			双向过滤器：<input type="text" v-model="money | conlog | dis "/>
+			<i>混合</i>
 
+			
 		</div>
 
 		<h3>#我是VUE的第二个组件：sim2</h3>
@@ -223,9 +238,6 @@
 		</div>
 
 	</body>
-
-	<script type="text/javascript">
-	</script>
 
 	<script type="text/javascript" src="js/vuedemojs/sim1.js"></script>
 	<script src="js/vuedemojs/sim2.js" type="text/javascript" charset="utf-8"></script>

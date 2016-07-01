@@ -3,7 +3,7 @@
 //这个组件只注册到sim1里面
 var mystarchild = Vue.extend({
 	template: '<div><slot></slot>。**我是模版原始的内容，哈哈，你替换不掉我**。<slot name="one"></slot></div>',
-//	props:['item','index']
+	//	props:['item','index']
 })
 
 var mystar = Vue.extend({
@@ -21,6 +21,23 @@ var mystar = Vue.extend({
 	template: '<span>我是mystar{{myStart}}，我还有-> {{msg}}</span>',
 
 });
+
+//自定义全局指令注册
+Vue.directive('my-tive', {
+	bind: function() {
+		// 准备工作
+		// 例如，添加事件处理器或只需要运行一次的高耗任务
+	},
+	update: function(newValue, oldValue) {
+		// 值更新时的工作
+		// 也会以初始值为参数调用一次
+		console.log("自定义指令绑定更新：newValue:" + newValue + " oldValue:" + oldValue);
+	},
+	unbind: function() {
+		// 清理工作
+		// 例如，删除 bind() 添加的事件监听器
+	}
+})
 
 //全局注册
 Vue.component("my-star", mystar);
@@ -87,12 +104,13 @@ var sim1 = new Vue({
 	el: "#sim1", //作用区域ID
 	//数据操作对象
 	data: {
-		messages:[],
+		messages: [],
 		parentMsg: "sim1顶部消息",
 		a: "a",
 		b: "b",
 		msg: "hello vue!",
 		num: 1,
+		money:99,
 		domake: false,
 		showtran: false,
 		checkedNames: [],
@@ -150,10 +168,24 @@ var sim1 = new Vue({
 			alert("sayhi!");
 		}
 	},
-	//过滤器
+	//简单使用过滤器
 	filters: {
 		conlog: function(ag1) {
 			console.log(ag1);
+			return ag1;
+		},
+		dis: {
+			// model -> view 第一次更新
+			// 在更新 `<input>` 元素之前格式化值
+			read: function(val) {
+				return '$' + val.toFixed(2)
+			},
+			// view -> model 后续更新
+			// 在写回数据之前格式化值
+			write: function(val, oldVal) {
+				var number = +val.replace(/[^\d.]/g, '')
+				return isNaN(number) ? 0 : parseFloat(number.toFixed(2))
+			}
 		}
 	},
 	//计算属性
@@ -171,7 +203,7 @@ var sim1 = new Vue({
 		}
 	},
 
-	// 在创建实例时 `events` 选项简单地调用 `$on`
+	//父子组件->自定义事件，在创建实例时 `events` 选项简单地调用 `$on`
 	events: {
 		'child-msg': function(msg) {
 			// 事件回调内的 `this` 自动绑定到注册它的实例上
